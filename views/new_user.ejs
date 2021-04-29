@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/new_user.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><h2>TEST App</h2></li>
+            <li><a href="/dashboard/admin">Dashboard</a></li>
+            <li><a href="/users/edit">Profile</a></li>
+        </ul>
+        <a href="/logout">Logout</a>
+    </nav>
+    <h2>Add a new user</h2>
+    <a href="/dashboard/admin">Return to Dashboard</a>
+    <% if (typeof success != "undefined"){ %>
+        <p id="success"><%= success[0] %></p>
+    <%}%>
+    <form action="/users/add_new" method="post">
+        <ul>
+            <li>
+                Email Addres: <input type="text" name="email">
+                <p><%= (typeof registration != "undefined") ?  registration[0].email : '' %></p>
+            </li>
+            <li>
+                First Name: <input type="text" name="first_name">
+                <p><%= (typeof registration != "undefined") ?  registration[0].first_name : '' %></p>
+            </li>
+            <li>
+                Last Name: <input type="text" name="last_name">
+                <p><%= (typeof registration != "undefined") ?  registration[0].last_name : '' %></p>
+            </li>
+            <li>
+                Password: <input type="password" name="password">
+                <p><%= (typeof registration != "undefined") ?  registration[0].password : '' %></p>
+            </li>
+            <li>
+                Password Confirmation: <input type="password" name="c_password">
+            </li>
+        </ul>
+        <input type="submit" value="Create">
+    </form>
+</body>
+</html>

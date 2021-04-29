@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/register_page.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><h2>TEST App</h2></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+        <a href="/signin">Signin</a>
+    </nav>
+    <% if (typeof success != "undefined"){ %>
+        <p id="success"><%= success[0] %></p>
+    <%}%>
+    
+    <h2>Register</h2>
+    <form action="/register" method="post">
+        <ul>
+            <li>
+                Email Addres: <input type="text" name="email">
+                <p><%= (typeof registration != "undefined") ?  registration[0].email : '' %></p>
+            </li>
+            <li>
+                First Name: <input type="text" name="first_name">
+                <p><%= (typeof registration != "undefined") ?  registration[0].first_name : '' %></p>
+            </li>
+            <li>
+                Last Name: <input type="text" name="last_name">
+                <p><%= (typeof registration != "undefined") ?  registration[0].last_name : '' %></p>
+            </li>
+            <li>
+                Password: <input type="password" name="password">
+                <p><%= (typeof registration != "undefined") ?  registration[0].password : '' %></p>
+            </li>
+            <li>
+                Password Confirmation: <input type="password" name="c_password">
+                <p></p>
+            </li>
+        </ul>   
+        <input type="submit" value="Register">
+    </form>
+    <a href="/signin">Already have an account? Login</a>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/users_wall.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function(){
+            var socket = io();
+            socket.on('post_post_comment', function(data){
+                $.each(data, function(index, value){
+                    if(index.includes('comment')){
+                        $(`${index}`).append(value).show('slow');;
+                    }
+                    else{
+                        $(`${index}`).prepend(value);
+                    }
+                })
+            })
+            $(document).on('submit', 'form', function(e){
+                e.preventDefault();
+                $.post($(this).attr('action'), $(this).serialize(), function(res)
+                {
+                    $.each(res, function(index, value)
+                    {
+                        if(index.includes('comment')){
+                            $(`${index}`).append(value);
+                        }
+                        else{
+                            $(`${index}`).prepend(value);
+                        }
+                        socket.emit('new_post_comment', res); 
+                    })
+                                                   
+                });
+                $(this).children('textarea').val('');   
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><h2>TEST App</h2></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/users/edit">Profile</a></li>
+        </ul>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div>
+        <h3><%= user.first_name + ' ' + user.last_name %></h3>
+        <ul>
+            <li>Registered at: <%= user.created_at %></li>
+            <li>User ID: #<%= user.id %></li>
+            <li>Email address: <%= user.email %></li>
+            <li>Description: <%= user.description %></li>
+        </ul>
+    </div>
+    <form action="/messages/leave_message/<%= user.id %>" method="post">
+        <h3>Leave a message for <%= user.first_name %> </h3>
+        <textarea name="message" placeholder="write a message"></textarea>
+        <input type="submit" value="Post">
+    </form>
+    <div id ='messages'>   
+<% messages.forEach(function(message){                                                                                          %>
+       
+        <div class="messages" id="<%= message.messages_id  %>">
+            <span><a href="/users/show/<%= message.sender_id  %>"><%= message.message_sender  %></a> wrote </span><span class="time"><%= message.created_at  %></span>
+            <p><%= message.message  %></p>
+            <div id="comments">
+<% if(message.comments != null){ %>
+<% for(i = 0; i < message.comments.length; i++){                                                                          %> 
+                <div class="comments">   
+                    <span><a href="/users/show/<%= message.comm_user_id[i]%>"><%= message.comm_owner[i]%></a></span><span class="time"><%= message.comments_created[i]%></span>
+                    <p><%= message.comments[i]%></p>
+                </div> 
+<% }} %>
+            </div>
+            <form id="form_comment"action="/messages/leave_comment/<%= message.messages_id  %>" method="post">
+                <textarea name="comment" placeholder="write a comment"></textarea>
+                <input type="submit" value="Post">
+            </form>
+        </div>
+    
+<% })%>
+    </div>
+</body>
+</html>

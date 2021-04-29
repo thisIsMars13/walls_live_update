@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/profile_page.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><h2>TEST App</h2></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/users/edit" class="active">Profile</a></li>
+            <li></li>
+        </ul>
+        <a href="/logout">Logout</a>
+    </nav>
+    <h2>Edit profile</h2>
+    <a href="/dashboard">Return to Dashboard</a>
+    <form action="/users/edit_info" method="post">
+        <p>Edit Information</p>
+        <% if(errors.info_updated){ %>
+            <p><%=  errors.info_updated[0] %></p>
+        <%}%>
+        <ul>
+            <li>
+                Email Addres: <input type="text" name="email" value="<%= data.email %>">
+                <p><%= (errors.info_update) ? errors.info_update[0].email : '' %></p>
+            </li>
+            <li>
+                First Name: <input type="text" name="first_name" value="<%= data.first_name %>">
+                <p><%= (errors.info_update) ? errors.info_update[0].first_name : '' %></p>
+            </li>
+            <li>
+                Last Name: <input type="text" name="last_name" value="<%= data.last_name %>">
+                <p><%= (errors.info_update) ? errors.info_update[0].last_name : '' %></p>
+            </li>
+        </ul>
+        
+        <input type="submit" value="Save">
+    </form>
+    
+    <form action="/users/edit_password" method="post">
+        <p>Edit password</p>
+        <% if(errors.password_updated){ %>
+            <p><%=  errors.password_updated[0] %></p>
+        <%}%>
+        <ul>
+            <li>
+                New password: <input type="password" name="password">
+                <p><%= (errors.password_update) ? errors.password_update[0].password : '' %></p>
+            </li>
+            <li>
+                Password Confirmation: <input type="password" name="c_password">
+            </li>
+        </ul>
+        <input type="submit" value="Update Password">
+    </form>
+    
+    <form action="/users/edit_description" method="post">
+        <p>Edit description</p>
+        <% if(errors.description_updated){ %>
+            <p><%=  errors.description_updated[0] %></p>
+        <%}%>
+        <textarea name="description"><%= data.description %></textarea>
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/dash_normal.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><h2>TEST App</h2></li>
+            <li><a href="/dashboard" class='active'>Dashboard</a></li>
+            <li><a href="/users/edit">Profile</a></li>
+        </ul>
+        <a href="/logout">Logout</a>
+    </nav>
+    <h2>All Users</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Registered</th>
+                <th>User Level</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% data.forEach(function(datum){ %>
+            <tr>
+                <td><%= datum.id %></td>
+                <td><a href="/users/show/<%= datum.id %>"><%= datum.first_name + ' ' + datum.last_name %></a></td>
+                <td><%= datum.email %></td>
+                <td><%= datum.created_at %></td>
+                <td><%= (datum.user_level == 1) ? 'Admin' : 'Normal' %></td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+    
+</body>
+</html>

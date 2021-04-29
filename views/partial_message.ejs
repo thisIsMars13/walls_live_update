@@ -1,0 +1,11 @@
+<div class="messages" id="<%= message.messages_id  %>">
+    <span><a href="/users/show/<%= message.sender_id  %>"><%= message.sender_name  %></a> wrote </span><span class="time"><%= message.created_at  %></span>
+    <p><%= message.message  %></p>
+    <div id="comments">
+        
+    </div>
+    <form id="form_comment"action="/messages/leave_comment/<%= message.messages_id  %>" method="post">
+        <textarea name="comment" placeholder="write a comment"></textarea>
+        <input type="submit" value="Post">
+    </form>
+</div>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/edit_page.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><h2>TEST App</h2></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/users/edit">Profile</a></li>
+        </ul>
+        <a href="/logout">Logout</a>
+    </nav>
+    <h2>Edit user #<%= data.id %></h2>
+    <a href="/dashboard">Return to Dashboard</a>
+    
+    <form action="/users/edit_info/<%= data.id %>" method="post">
+        <p>Edit Information</p>
+        <% if(notification.info_updated){ %>
+            <p><%=  notification.info_updated[0] %></p>
+        <%}%>
+        <ul>
+            <li>
+                Email Addres: <input type="text" name="email" value="<%= data.email %>">
+                <p><%= (notification.info_update) ? notification.info_update[0].email : '' %></p>
+            </li>
+            <li>
+                First Name: <input type="text" name="first_name" value="<%= data.first_name %>">
+                <p><%= (notification.info_update) ? notification.info_update[0].first_name : '' %></p>
+            </li>
+            <li>
+                Last Name: <input type="text" name="last_name" value="<%= data.last_name %>">
+                <p><%= (notification.info_update) ? notification.info_update[0].last_name : '' %></p>
+            </li>
+            <li>
+                User Level: 
+                <select name="user_level">
+                    <option value="0"  >Normal</option>
+                    <option value="1" <%= (data.user_level == 1) ? 'selected' : '' %>>Admin</option>
+                </select>
+            </li>
+        </ul>
+        <input type="submit" value="Save">
+    </form>
+    
+    <form action="/users/edit_password/<%= data.id %>" method="post">
+        <p>Edit password</p>
+        <% if(notification.password_updated){ %>
+            <p><%=  notification.password_updated[0] %></p>
+        <%}%>
+        <ul>
+            <li>
+                New password: <input type="password" name="password">
+                <p><%= (notification.password_update) ? notification.password_update[0].password : '' %></p>
+            </li>
+            <li>
+                Password Confirmation: <input type="password" name="confirm_password">
+            </li>
+        </ul>
+        <input type="submit" value="Update Password">
+    </form>
+</body>
+</html>
